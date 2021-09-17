@@ -5,7 +5,6 @@ import { App } from './app.routes';
 import { Auth } from './auth.routes';
 
 export const Routes = () => {
-    const isUserAuthenticated = true;
     const { user } = useAuth();
 
     return (

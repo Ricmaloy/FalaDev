@@ -1,7 +1,6 @@
 import { Switch, Route} from 'react-router-dom';
 import { Contacts } from '../pages/Contacts';
 import { Dashboard } from '../pages/Dashboard';
-import { SignIn } from '../pages/SignIn';
 
 export const App = () => {
     return (
