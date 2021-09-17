@@ -1,0 +1,20 @@
+{
+  "rules": {
+    "posts": {
+      ".read": true,
+      ".write": "auth != null",
+      "$postId": {
+				".read": true,
+        ".write": true,
+        "comments": {
+          ".read": true,
+          ".write": true
+        },
+        "likes": {
+          ".read": true,
+          ".write": true
+        }
+      }
+    }
+  }
+}
