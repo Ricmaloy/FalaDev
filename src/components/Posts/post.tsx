@@ -10,6 +10,9 @@ interface CommentaryProps {
     name: string,
     avatar: string;
     commentary: string;
+    commentaryId: string;
+    commentaryLikeCount: number;
+    commentaryLikeId: string | undefined;
 }
 
 interface PostProps {
@@ -19,11 +22,11 @@ interface PostProps {
     likesCounter: number;
     likeId: string | undefined;
     postId: string;
-    commentsCounter: number;
-    CommentsList: CommentaryProps[];
+    commentsCount: number;
+    commentsList: CommentaryProps[];
 }
 
-export const Post = ({name, avatar, content, likesCounter, commentsCounter, CommentsList, postId, likeId}: PostProps) => {
+export const Post = ({name, avatar, content, likesCounter, commentsCount, commentsList, postId, likeId}: PostProps) => {
     const [commentary, setCommentary] = useState('');
     const [isCommentSectionHidden, setIsCommentSectionHidden] = useState(true);
 
@@ -39,7 +42,7 @@ export const Post = ({name, avatar, content, likesCounter, commentsCounter, Comm
                 name: user?.name,
                 avatar: user?.avatar,
             });
-        }
+        } 
     }
 
     async function handleAddCommentary(postId: string, commentary: string) {
@@ -99,7 +102,7 @@ export const Post = ({name, avatar, content, likesCounter, commentsCounter, Comm
                     </Flex>
                     <Flex align='center'>
                         <Icon as={RiChat2Line} fontSize='20' mr='1' cursor='pointer' onClick={toggleCommentarySection} />
-                        <Text>{commentsCounter}</Text>
+                        <Text>{commentsCount}</Text>
                     </Flex>
                 </Flex>
 
@@ -107,12 +110,20 @@ export const Post = ({name, avatar, content, likesCounter, commentsCounter, Comm
             </Flex>
 
             {
-                CommentsList.map(commentary => {
+                commentsList.map(commentary => {
                     return (
-                        <>
-                        <Divider mt='4' borderColor='gray.700' />
-                        <Commentary key={`comentario de ${commentary.name}`} avatar={commentary.avatar} name={commentary.name} commentary={commentary.commentary}/>
-                        </>
+                        <Box key={commentary.commentaryId} >
+                            <Divider mt='4' borderColor='gray.700' />
+                            <Commentary
+                              avatar={commentary.avatar}
+                              name={commentary.name}
+                              commentary={commentary.commentary}
+                              commentaryId={commentary.commentaryId}
+                              commentaryLikeCount={commentary.commentaryLikeCount} 
+                              postIdRef={postId}
+                              commentaryLikeId={commentary.commentaryLikeId}
+                            />
+                        </Box>
                     )
                 })
             }

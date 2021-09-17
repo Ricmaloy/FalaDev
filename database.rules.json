@@ -8,7 +8,11 @@
         ".write": true,
         "comments": {
           ".read": true,
-          ".write": true
+          ".write": true,
+          "likes": {
+            ".read": true,
+          	".write": true
+          }
         },
         "likes": {
           ".read": true,

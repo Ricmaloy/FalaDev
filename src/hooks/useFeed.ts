@@ -4,6 +4,9 @@ import { useAuth } from "./useAuth";
 
 
 type CommentaryProps = {
+    commentaryLikeId: string | undefined;
+    commentaryLikeCount: number;
+    commentaryId: string;
     name: string;
     avatar: string;
     commentary: string;
@@ -19,7 +22,7 @@ type PostProps = {
     likeCount: number;
     likeId: string | undefined;
     commentsCount: number;
-    comments: CommentaryProps[] ;
+    comments: CommentaryProps[];
 }
 
 type FirebasePosts = Record<number, {
@@ -31,9 +34,13 @@ type FirebasePosts = Record<number, {
        authorId: string; 
     }>;
     comments: Record<number , {
+        commentaryId: string;
         name: string;
         avatar: string;
         commentary: string;
+        likes: Record <string, {
+            authorId: string; 
+        }>;
     }>
 }>
 
@@ -51,6 +58,8 @@ export function useFeed() {
             const FirebasePosts: FirebasePosts = databasePosts ?? {};
 
             const parsedPosts = Object.entries(FirebasePosts).map(([key, value]) => {
+                
+
                 return {
                     postId: key,
                     content: value.content,
@@ -58,10 +67,19 @@ export function useFeed() {
                     likeCount: Object.values(value.likes ?? {}).length,
                     likeId: Object.entries(value.likes ?? {}).find(([key, like]) => like.authorId === user?.id)?.[0],
                     commentsCount: Object.values(value.comments ?? {}).length,
-                    comments: Object.values(value.comments ?? {})
+                    comments: Object.entries(value.comments ?? {}).map(([key, comment]) => {
+                        return {    
+                            commentaryId: key,
+                            avatar: comment.avatar,
+                            commentary: comment.commentary,
+                            name: comment.name,
+                            commentaryLikeCount: Object.values(comment.likes ?? {}).length,
+                            commentaryLikeId: Object.entries(comment.likes ?? {}).find(([key, like]) => like.authorId === user?.id)?.[0]
+                        }
+                    })
                 }
             });
-
+            
             setPosts(parsedPosts);
         });
 

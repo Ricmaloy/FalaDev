@@ -4,7 +4,7 @@ import { Post } from './post'
 
 export const Posts = () => {
     const { posts } = useFeed()
-
+    
     return (
        <Flex
         flexDir='column-reverse'
@@ -18,9 +18,9 @@ export const Posts = () => {
                   name={post.author.name}
                   content={post.content}
                   likesCounter={post.likeCount}
-                  commentsCounter={post.commentsCount}
-                  CommentsList={post.comments}
-                  likeId={post.likeId} 
+                  commentsCount={post.commentsCount}
+                  commentsList={post.comments}
+                  likeId={post.likeId}
                 />
             )
         })}
