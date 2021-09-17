@@ -1,4 +1,4 @@
-import { Flex, Avatar, Stack, Textarea, Button, Text, Icon } from '@chakra-ui/react'
+import { Flex, Avatar, Stack, Textarea, Button, Text, Icon, useToast } from '@chakra-ui/react'
 import { RiLockUnlockLine } from 'react-icons/ri'
 import { FormEvent, useState } from 'react'
 import { useAuth } from '../../hooks/useAuth'
@@ -7,21 +7,54 @@ import { Container } from '../Container'
 
 export const CreatePost = () => {
     const [post, setPost] = useState('');
+    const [isButtonLoading, setIsButtonLoading] = useState(false);
     const { user } = useAuth();
+    const toast = useToast();
 
     async function handleCreatePost(ev: FormEvent) {
         ev.preventDefault()
+        setIsButtonLoading(true);
 
-        const postRef = database.ref('posts');
+        if(post.trim() === '') {
+            toast({
+                title: "Algo deu errado",
+                description: "Não foi possível publicar seu post",
+                status: "error",
+                duration: 4000,
+                position: 'top',
+                isClosable: true,
+            });
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const firebasePost = await postRef.push({
-            name: user?.name,
-            avatar: user?.avatar,
-            content: post,
-        })
+            setIsButtonLoading(false);
 
-        setPost('');
+            return;
+        }
+
+        setTimeout(async () => {
+
+            setIsButtonLoading(false);
+
+            const postRef = database.ref('posts');
+
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            const firebasePost = await postRef.push({
+                name: user?.name,
+                avatar: user?.avatar,
+                content: post,
+            })
+
+            setPost('');
+
+            toast({
+                title: "Sucesso !",
+                description: "Seu post foi publicado",
+                status: "success",
+                duration: 4000,
+                position: 'top',
+                isClosable: true,
+            })
+
+        }, 1000);
     }
 
     return (
@@ -55,7 +88,7 @@ export const CreatePost = () => {
                             <Icon as={RiLockUnlockLine} fontSize='20' />
                             <Text fontSize='xs' ml='2' >Esse post será público</Text>
                         </Flex>
-                        <Button colorScheme='orange' ml='auto' px='7' onClick={handleCreatePost} >
+                        <Button colorScheme='orange' ml='auto' px='7' onClick={handleCreatePost} isLoading={isButtonLoading} >
                             <Text fontSize='sm' >Postar</Text>
                         </Button>
                     </Flex>
