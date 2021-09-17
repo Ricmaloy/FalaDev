@@ -1,8 +1,12 @@
 import { Box, Stack, Text, Icon, Link } from '@chakra-ui/react'
 import { Link as RouterLink } from 'react-router-dom'
-import { RiBarChart2Line, RiBookmarkLine, RiContactsLine, RiDashboardLine, RiGitPullRequestLine, RiNotification3Line, RiQuestionAnswerLine, RiQuestionLine, RiSettings4Line } from 'react-icons/ri'
+import { RiBarChart2Line, RiBookmarkLine, RiContactsLine, RiDashboardLine, RiNotification3Line, RiQuestionAnswerLine, RiQuestionLine, RiSettings4Line, RiLogoutBoxLine } from 'react-icons/ri'
+import { useAuth } from '../../hooks/useAuth'
+
 
 export const SideBar = () => {
+    const { signOut } = useAuth();
+
     return (
         <Box
             as='aside'
@@ -39,10 +43,6 @@ export const SideBar = () => {
                             <Icon as={RiBookmarkLine} fontSize='20' />
                             <Text ml='4' fontWeight='md'>Itens salvos</Text> 
                         </Link>
-                        <Link display='flex' align='center'>
-                            <Icon as={RiGitPullRequestLine} fontSize='20' />
-                            <Text ml='4' fontWeight='md'>Automação</Text> 
-                        </Link>
                     </Stack>
                 </Box>
 
@@ -64,6 +64,10 @@ export const SideBar = () => {
                         <Link display='flex' align='center'>
                             <Icon as={RiBarChart2Line} fontSize='20' />
                             <Text ml='4' fontWeight='md'>Estatísticas</Text> 
+                        </Link>
+                        <Link display='flex' align='center' onClick={signOut} >
+                            <Icon as={RiLogoutBoxLine} fontSize='20' />
+                            <Text ml='4' fontWeight='md'>Sair</Text> 
                         </Link>
                     </Stack>
                 </Box>

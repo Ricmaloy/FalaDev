@@ -12,10 +12,8 @@ export function SignIn() {
         if(!user) {
            await signInWithGoogle() 
         }
-
-        console.log(user)
-
-        history.push('/dashboard');
+        
+        history.push('/');
     }
 
     return (
