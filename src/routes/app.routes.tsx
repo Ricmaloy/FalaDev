@@ -6,8 +6,7 @@ import { SignIn } from '../pages/SignIn';
 export const App = () => {
     return (
         <Switch>
-            <Route path="/" component={SignIn} exact/>
-            <Route path="/dashboard" component={Dashboard}/>
+            <Route path="/" component={Dashboard} exact/>
             <Route path="/contacts" component={Contacts}/>
         </Switch>
     )
