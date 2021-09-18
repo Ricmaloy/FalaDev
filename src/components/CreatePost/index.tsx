@@ -18,7 +18,7 @@ export const CreatePost = () => {
         if(post.trim() === '') {
             toast({
                 title: "Algo deu errado",
-                description: "Não foi possível publicar seu post",
+                description: "Preencha o campo corretamente.",
                 status: "error",
                 duration: 4000,
                 position: 'top',

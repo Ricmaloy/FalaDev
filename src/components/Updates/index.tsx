@@ -30,7 +30,7 @@ export const Updates = () => {
                     </Text>
                 </Link>
 
-                <Divider />
+                <Divider borderColor='gray.700' />
 
                 <Link as={RouterLink} to='/news2' > 
                     <Text
@@ -47,7 +47,7 @@ export const Updates = () => {
                     </Text>
                 </Link>
 
-                <Divider />
+                <Divider borderColor='gray.700' />
 
                 <Link as={RouterLink} to='/news3' > 
                     <Text
@@ -64,7 +64,7 @@ export const Updates = () => {
                     </Text>
                 </Link>
 
-                <Divider />
+                <Divider borderColor='gray.700' />
 
                 <Link as={RouterLink} to='/news4' > 
                     <Text
