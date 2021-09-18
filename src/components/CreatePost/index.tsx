@@ -41,6 +41,7 @@ export const CreatePost = () => {
                 name: user?.name,
                 avatar: user?.avatar,
                 content: post,
+                publicationTime: Date()
             })
 
             setPost('');

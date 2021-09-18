@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Flex, Text, Avatar, Icon, Divider, Box, Button, Input } from '@chakra-ui/react'
 import { RiMoreLine, RiHeartLine, RiChat2Line, RiShareLine, RiHeartFill } from 'react-icons/ri'
+import TimeAgo from 'timeago-react';
 import { useAuth } from '../../hooks/useAuth'
 import { database } from '../../services/firebase'
 import { Container } from '../Container'
@@ -12,6 +13,7 @@ interface CommentaryProps {
     commentary: string;
     commentaryId: string;
     commentaryLikeCount: number;
+    commentaryPublicationTime: string;
     commentaryLikeId: string | undefined;
 }
 
@@ -19,6 +21,7 @@ interface PostProps {
     name: string;
     avatar: string;
     content: string;
+    publicationTime: string;
     likesCounter: number;
     likeId: string | undefined;
     postId: string;
@@ -26,11 +29,22 @@ interface PostProps {
     commentsList: CommentaryProps[];
 }
 
-export const Post = ({name, avatar, content, likesCounter, commentsCount, commentsList, postId, likeId}: PostProps) => {
+export const Post = ({
+    name, 
+    avatar, 
+    content, 
+    likesCounter, 
+    commentsCount, 
+    commentsList, 
+    postId, 
+    likeId, 
+    publicationTime
+}: PostProps) => {
+
     const [commentary, setCommentary] = useState('');
     const [isCommentSectionHidden, setIsCommentSectionHidden] = useState(true);
 
-    const { user } = useAuth()
+    const { user } = useAuth();
 
     async function handleLikePost(postId: string, likeId: string | undefined) {
         
@@ -50,6 +64,7 @@ export const Post = ({name, avatar, content, likesCounter, commentsCount, commen
             commentary: commentary,
             name: user?.name,
             avatar: user?.avatar,
+            commentaryPublicationTime: Date()
         });
 
         setCommentary('')
@@ -74,7 +89,13 @@ export const Post = ({name, avatar, content, likesCounter, commentsCount, commen
                     justify='center'
                     ml='3'
                 >
-                    <Text fontSize='sm'>{name}</Text>
+                    <Flex
+                        flexDir='row'
+                    >
+                        <Text fontSize='sm'>{name}</Text>
+                        <Box alignSelf='center' w='4px' h='4px' bg='gray.400' mx='2' borderRadius='full' ></Box>
+                        <Text as='span' fontSize='xs' color='gray.400' > <TimeAgo datetime={publicationTime} locale='pt_BR'  /></Text> 
+                    </Flex>
                     <Text fontSize='xs' color='orange.300'>Desenvolvedor(a)</Text>
                 </Flex>
                 <Icon as={RiMoreLine} ml='auto'/>
@@ -122,6 +143,7 @@ export const Post = ({name, avatar, content, likesCounter, commentsCount, commen
                               commentaryLikeCount={commentary.commentaryLikeCount} 
                               postIdRef={postId}
                               commentaryLikeId={commentary.commentaryLikeId}
+                              commentaryPublicationTime={commentary.commentaryPublicationTime}
                             />
                         </Box>
                     )

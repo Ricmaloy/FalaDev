@@ -1,5 +1,6 @@
-import { Flex, Text, Avatar, Icon, Stack } from '@chakra-ui/react'
+import { Flex, Text, Avatar, Icon, Stack, Box } from '@chakra-ui/react'
 import { RiHeartFill, RiHeartLine, RiReplyLine } from 'react-icons/ri'
+import TimeAgo from 'timeago-react';
 import { useAuth } from '../../hooks/useAuth'
 import { database } from '../../services/firebase'
 
@@ -11,9 +12,19 @@ interface CommentaryProps {
     commentaryLikeCount: number;
     postIdRef: string;
     commentaryLikeId: string | undefined;
+    commentaryPublicationTime: string;
 }
 
-export const Commentary = ({ name, avatar, commentary, postIdRef, commentaryId, commentaryLikeCount, commentaryLikeId}: CommentaryProps) => {
+export const Commentary = ({ 
+    name, 
+    avatar, 
+    commentary, 
+    postIdRef, 
+    commentaryId, 
+    commentaryLikeCount, 
+    commentaryLikeId, 
+    commentaryPublicationTime
+}: CommentaryProps) => {
     const { user } = useAuth();
 
     async function handleLikeCommentary(postId: string, commentaryLikeId: string | undefined, commentaryId: string) {
@@ -21,10 +32,11 @@ export const Commentary = ({ name, avatar, commentary, postIdRef, commentaryId, 
         if( commentaryLikeId ) {
             await database.ref(`posts/${postId}/comments/${commentaryId}/likes/${commentaryLikeId}`).remove();
         } else {
+
             await database.ref(`posts/${postId}/comments/${commentaryId}/likes/`).push({
                 authorId: user?.id,
                 name: user?.name,
-                avatar: user?.avatar,
+                avatar: user?.avatar
             });
         } 
     }
@@ -45,8 +57,13 @@ export const Commentary = ({ name, avatar, commentary, postIdRef, commentaryId, 
                     <Flex
                         flexDir='column'
                         ml='3'
+                        justify='center'
                     >
-                        <Text as='span'>{name}</Text>
+                        <Flex flexDir='row' >
+                            <Text as='span'>{name}</Text>
+                            <Box alignSelf='center' w='4px' h='4px' bg='gray.400' mx='2' borderRadius='full' ></Box>
+                            <Text as='span' fontSize='xs' color='gray.400' > <TimeAgo datetime={commentaryPublicationTime} locale='pt_BR'  /></Text> 
+                        </Flex>
                         <Text color='gray.300'>{commentary}</Text>
                     
                         <Flex

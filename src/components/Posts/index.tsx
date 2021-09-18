@@ -21,6 +21,7 @@ export const Posts = () => {
                   commentsCount={post.commentsCount}
                   commentsList={post.comments}
                   likeId={post.likeId}
+                  publicationTime={post.publicationTime}
                 />
             )
         })}

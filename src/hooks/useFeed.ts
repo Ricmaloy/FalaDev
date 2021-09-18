@@ -10,6 +10,7 @@ type CommentaryProps = {
     name: string;
     avatar: string;
     commentary: string;
+    commentaryPublicationTime: string;
 }
 
 type PostProps = {
@@ -19,6 +20,7 @@ type PostProps = {
         avatar: string;
     };
     content: string;
+    publicationTime: string;
     likeCount: number;
     likeId: string | undefined;
     commentsCount: number;
@@ -30,6 +32,7 @@ type FirebasePosts = Record<number, {
     name: string;
     avatar: string;
     content: string;
+    publicationTime: string;
     likes: Record <string, {
        authorId: string; 
     }>;
@@ -38,6 +41,7 @@ type FirebasePosts = Record<number, {
         name: string;
         avatar: string;
         commentary: string;
+        commentaryPublicationTime: string;
         likes: Record <string, {
             authorId: string; 
         }>;
@@ -63,6 +67,7 @@ export function useFeed() {
                 return {
                     postId: key,
                     content: value.content,
+                    publicationTime: value.publicationTime,
                     author: { name: value.name, avatar: value.avatar},
                     likeCount: Object.values(value.likes ?? {}).length,
                     likeId: Object.entries(value.likes ?? {}).find(([key, like]) => like.authorId === user?.id)?.[0],
@@ -72,6 +77,7 @@ export function useFeed() {
                             commentaryId: key,
                             avatar: comment.avatar,
                             commentary: comment.commentary,
+                            commentaryPublicationTime: comment.commentaryPublicationTime,
                             name: comment.name,
                             commentaryLikeCount: Object.values(comment.likes ?? {}).length,
                             commentaryLikeId: Object.entries(comment.likes ?? {}).find(([key, like]) => like.authorId === user?.id)?.[0]
