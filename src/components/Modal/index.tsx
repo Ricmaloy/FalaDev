@@ -23,7 +23,6 @@ interface modalProps {
 export const Modal = ({isModalOpen, onModalClose, path}: modalProps) => {
     const { likes } = useGetLikes(path);
 
-    console.log(likes)
     return (
         <ChakraModal isOpen={isModalOpen} onClose={onModalClose} scrollBehavior={'inside'}>
             <ModalOverlay />
@@ -37,10 +36,10 @@ export const Modal = ({isModalOpen, onModalClose, path}: modalProps) => {
                 )}
                 <Divider borderColor='gray.600' />
                 <Stack>
-                    { likes.length > 0 ? (
+                    { 
+                        likes.length > 0 ? (
                         likes.map(like => {
                             return (
-                                <>
                                 <Flex my='3' key={like.likeId} >
                                     <Avatar
                                         size='md'
@@ -54,10 +53,9 @@ export const Modal = ({isModalOpen, onModalClose, path}: modalProps) => {
                                         <Text fontSize='xs' color='orange.300'>Desenvolvedor(a)</Text>
                                     </Flex>
                                 </Flex>
-                                </>
                             )
-                        })) : 
-                        (
+                        })
+                        ) : (
                             <Text fontSize='sm' my='4' color='gray.200' >Você pode ser o primeiro a curtir o post, que tal ?  🤩</Text>
                         )
                     }

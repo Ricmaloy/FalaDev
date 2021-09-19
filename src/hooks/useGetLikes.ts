@@ -17,8 +17,6 @@ type firebaseLikesProps = Record<string, {
 export function useGetLikes( path: string ) {
     const [likes, setLikes] = useState<likesProps>([]);
 
-    console.log(path)
-
     useEffect(() => {
         const likesRef = database.ref(path);
 
