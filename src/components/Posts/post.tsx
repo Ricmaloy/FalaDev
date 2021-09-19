@@ -1,11 +1,12 @@
 import { useState } from 'react'
-import { Flex, Text, Avatar, Icon, Divider, Box, Button, Input } from '@chakra-ui/react'
+import { Flex, Text, Avatar, Icon, Divider, Box, Button, Input, useDisclosure } from '@chakra-ui/react'
 import { RiMoreLine, RiHeartLine, RiChat2Line, RiShareLine, RiHeartFill } from 'react-icons/ri'
 import TimeAgo from 'timeago-react';
 import { useAuth } from '../../hooks/useAuth'
 import { database } from '../../services/firebase'
 import { Container } from '../Container'
 import { Commentary } from './commentary'
+import { Modal } from '../Modal';
 
 interface CommentaryProps {
     name: string,
@@ -40,11 +41,12 @@ export const Post = ({
     likeId, 
     publicationTime
 }: PostProps) => {
+    const { user } = useAuth();
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
     const [commentary, setCommentary] = useState('');
     const [isCommentSectionHidden, setIsCommentSectionHidden] = useState(true);
 
-    const { user } = useAuth();
 
     async function handleLikePost(postId: string, likeId: string | undefined) {
         
@@ -119,7 +121,8 @@ export const Post = ({
                                 )
                             }
                         </button>
-                        <Text>{likesCounter}</Text>
+                        <Text onClick={onOpen} cursor='pointer' >{likesCounter}</Text>
+                        <Modal  path={`posts/${postId}/likes`} isModalOpen={isOpen} onModalClose={onClose} />
                     </Flex>
                     <Flex align='center'>
                         <Icon as={RiChat2Line} fontSize='20' mr='1' cursor='pointer' onClick={toggleCommentarySection} />

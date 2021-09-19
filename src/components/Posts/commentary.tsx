@@ -1,8 +1,9 @@
-import { Flex, Text, Avatar, Icon, Stack, Box } from '@chakra-ui/react'
+import { Flex, Text, Avatar, Icon, Stack, Box, useDisclosure } from '@chakra-ui/react'
 import { RiHeartFill, RiHeartLine, RiReplyLine } from 'react-icons/ri'
 import TimeAgo from 'timeago-react';
 import { useAuth } from '../../hooks/useAuth'
 import { database } from '../../services/firebase'
+import { Modal } from '../Modal';
 
 interface CommentaryProps {
     name: string,
@@ -26,6 +27,7 @@ export const Commentary = ({
     commentaryPublicationTime
 }: CommentaryProps) => {
     const { user } = useAuth();
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
     async function handleLikeCommentary(postId: string, commentaryLikeId: string | undefined, commentaryId: string) {
 
@@ -82,7 +84,8 @@ export const Commentary = ({
                                         )
                                     }
                                 </button>
-                                <Text>{commentaryLikeCount}</Text>
+                                <Text onClick={onOpen} cursor='pointer' >{commentaryLikeCount}</Text>
+                                <Modal path={`posts/${postIdRef}/comments/${commentaryId}/likes/`} isModalOpen={isOpen} onModalClose={onClose} />
                             </Flex>
                             <Flex
                                 align='center'
