@@ -20,7 +20,7 @@ interface modalProps {
     onModalClose: () => void,
 }
 
-export const Modal = ({isModalOpen, onModalClose, path}: modalProps) => {
+export const LikesModal = ({isModalOpen, onModalClose, path}: modalProps) => {
     const { likes } = useGetLikes(path);
 
     return (
@@ -35,12 +35,12 @@ export const Modal = ({isModalOpen, onModalClose, path}: modalProps) => {
                     <Text my='3'>{likes.length} pessoa(s) curtiram isso ! 👍</Text>
                 )}
                 <Divider borderColor='gray.600' />
-                <Stack>
+                <Stack my='3'>
                     { 
                         likes.length > 0 ? (
                         likes.map(like => {
                             return (
-                                <Flex my='3' key={like.likeId} >
+                                <Flex key={like.likeId} >
                                     <Avatar
                                         size='md'
                                         name={like.name}
@@ -50,7 +50,11 @@ export const Modal = ({isModalOpen, onModalClose, path}: modalProps) => {
                                     />
                                     <Flex flexDir='column' justify='center' >
                                         <Text fontSize='sm'>{like.name}</Text>
-                                        <Text fontSize='xs' color='orange.300'>Desenvolvedor(a)</Text>
+                                        {like.spec ? (
+                                            <Text fontSize='xs' color='orange.300'>{like.spec}</Text>
+                                        ) : (
+                                            <Text fontSize='xs' color='orange.300'>Visitante</Text>
+                                        )}
                                     </Flex>
                                 </Flex>
                             )

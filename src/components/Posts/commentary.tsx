@@ -1,9 +1,15 @@
 import { Flex, Text, Avatar, Icon, Stack, Box, useDisclosure } from '@chakra-ui/react'
 import { RiHeartFill, RiHeartLine, RiReplyLine } from 'react-icons/ri'
-import TimeAgo from 'timeago-react';
 import { useAuth } from '../../hooks/useAuth'
 import { database } from '../../services/firebase'
-import { Modal } from '../Modal';
+import { LikesModal } from '../LikesModal';
+
+import TimeAgo from 'timeago-react';
+import * as timeago from 'timeago.js';
+
+import pt_BR from 'timeago.js/lib/lang/pt_BR';
+
+timeago.register('pt_BR', pt_BR);
 
 interface CommentaryProps {
     name: string,
@@ -38,7 +44,8 @@ export const Commentary = ({
             await database.ref(`posts/${postId}/comments/${commentaryId}/likes/`).push({
                 authorId: user?.id,
                 name: user?.name,
-                avatar: user?.avatar
+                avatar: user?.avatar,
+                spec: `${user?.occupation} na ${user?.company}`,
             });
         } 
     }
@@ -85,7 +92,7 @@ export const Commentary = ({
                                     }
                                 </button>
                                 <Text onClick={onOpen} cursor='pointer' >{commentaryLikeCount}</Text>
-                                <Modal path={`posts/${postIdRef}/comments/${commentaryId}/likes/`} isModalOpen={isOpen} onModalClose={onClose} />
+                                <LikesModal path={`posts/${postIdRef}/comments/${commentaryId}/likes/`} isModalOpen={isOpen} onModalClose={onClose} />
                             </Flex>
                             <Flex
                                 align='center'

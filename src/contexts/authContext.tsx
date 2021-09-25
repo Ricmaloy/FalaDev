@@ -1,10 +1,22 @@
 import { useState, createContext, useEffect, ReactNode } from 'react';
-import { auth, firebase } from '../services/firebase';
+import { useAuth } from '../hooks/useAuth';
+import { auth, database, firebase } from '../services/firebase';
+
+type FirebaseUsers = Record<string, {
+  id: string;
+  name: string;
+  avatar: string;
+  occupation?: string | undefined;
+  company?: string | undefined;
+  contact: string;
+}>
 
 type User = {
     id: string;
     name: string;
     avatar: string;
+    occupation?: string | undefined;
+    company?: string | undefined;
     contact: string;
 }
   
@@ -21,33 +33,72 @@ type AuthContextProviderProps = {
 export const AuthContext = createContext({} as AuthContextType);
 
 export function AuthContextProvider( props: AuthContextProviderProps ) {
-
-    const [user, setUser] = useState<User>();
-
-    useEffect(() => {
-      const unsubscribe = auth.onAuthStateChanged(user => {
-        if(user) {
-          const { displayName, photoURL, uid, email } = user;
+  const data = useAuth();
+  const userData = data.user;
   
-          if(!displayName || !photoURL || !email) {
-            throw new Error('Missing information from Google Account!');
-          };
   
-          setUser({
-            id: uid,
-            name: displayName,
-            avatar: photoURL,
-            contact: email
+  const [user, setUser] = useState<User>();
+  
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      if(user) {
+        const { displayName, photoURL, uid, email } = user;
+        
+        if(!displayName || !photoURL || !email) {
+          throw new Error('Missing information from Google Account!');
+        };
+
+        const usersRef = database.ref(`users`);
+        usersRef.on('value', user => {
+
+          const databaseUsers = user.val();
+          const firebaseUsers: FirebaseUsers = databaseUsers ?? {};
+
+          const parsedUsers = Object.entries(firebaseUsers).map(([key, value]) => {
+            return {
+              avatar: value.avatar,
+              occupation: value.occupation,
+              company: value.company,
+              contact: value.contact,
+              id: value.id,
+              name: value.name
+            }
           });
+
+          const selectedUser = parsedUsers.filter(user => user.id === uid)[0];
+
+          if(selectedUser?.company && selectedUser?.occupation) {
+            setUser({
+              id: uid,
+              name: displayName,
+              avatar: photoURL,
+              occupation: selectedUser.occupation,
+              company: selectedUser.company,
+              contact: email
+            })
+          } else {
+            setUser({
+              id: uid,
+              name: displayName,
+              avatar: photoURL,
+              occupation: undefined,
+              company: undefined,
+              contact: email
+            })
+          }
+
+          
+        })
         }
       });
   
       return() => {
         unsubscribe();
       }
-    }, []);
+    }, [userData]);
   
     async function signInWithGoogle() {
+    
       const provider = new firebase.auth.GoogleAuthProvider();
   
       const result = await auth.signInWithPopup(provider);
@@ -58,13 +109,47 @@ export function AuthContextProvider( props: AuthContextProviderProps ) {
         if(!displayName || !photoURL || !email) {
           throw new Error('Missing information from Google Account!');
         };
-  
-        setUser({
-          id: uid,
-          name: displayName,
-          avatar: photoURL,
-          contact: email
-        });
+
+        const usersRef = database.ref(`users`);
+        usersRef.on('value', user => {
+
+          const databaseUsers = user.val();
+          const firebaseUsers: FirebaseUsers = databaseUsers ?? {};
+
+          const parsedUsers = Object.entries(firebaseUsers).map(([key, value]) => {
+            return {
+              avatar: value.avatar,
+              occupation: value.occupation,
+              company: value.company,
+              contact: value.contact,
+              id: value.id,
+              name: value.name
+            }
+          });
+
+          const selectedUser = parsedUsers.filter(user => user.id === uid)[0];
+          
+          if(selectedUser?.company && selectedUser?.occupation) {
+            setUser({
+              id: uid,
+              name: displayName,
+              avatar: photoURL,
+              occupation: selectedUser.occupation,
+              company: selectedUser.company,
+              contact: email
+            })
+          } else {
+            setUser({
+              id: uid,
+              name: displayName,
+              avatar: photoURL,
+              occupation: undefined,
+              company: undefined,
+              contact: email
+            })
+          }
+          
+        })
       }
     }
 

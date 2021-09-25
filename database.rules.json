@@ -19,6 +19,14 @@
           ".write": true
         }
       }
+    },
+    "users": {
+      ".read": true,
+      ".write": true
+    },
+    "bugs":{
+      ".read": true,
+      ".write": true
     }
   }
 }

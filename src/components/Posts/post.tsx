@@ -6,7 +6,7 @@ import { useAuth } from '../../hooks/useAuth'
 import { database } from '../../services/firebase'
 import { Container } from '../Container'
 import { Commentary } from './commentary'
-import { Modal } from '../Modal';
+import { LikesModal } from '../LikesModal';
 
 interface CommentaryProps {
     name: string,
@@ -21,6 +21,7 @@ interface CommentaryProps {
 interface PostProps {
     name: string;
     avatar: string;
+    spec: string;
     content: string;
     publicationTime: string;
     likesCounter: number;
@@ -32,7 +33,8 @@ interface PostProps {
 
 export const Post = ({
     name, 
-    avatar, 
+    avatar,
+    spec,
     content, 
     likesCounter, 
     commentsCount, 
@@ -57,6 +59,7 @@ export const Post = ({
                 authorId: user?.id,
                 name: user?.name,
                 avatar: user?.avatar,
+                spec: `${user?.occupation} na ${user?.company}`,
             });
         } 
     }
@@ -96,9 +99,13 @@ export const Post = ({
                     >
                         <Text fontSize='sm'>{name}</Text>
                         <Box alignSelf='center' w='4px' h='4px' bg='gray.400' mx='2' borderRadius='full' ></Box>
-                        <Text as='span' fontSize='xs' color='gray.400' > <TimeAgo datetime={publicationTime} locale='pt_BR'  /></Text> 
+                        <Text as='span' fontSize='xs' color='gray.400' ><TimeAgo datetime={publicationTime} locale='pt_BR' /></Text> 
                     </Flex>
-                    <Text fontSize='xs' color='orange.300'>Desenvolvedor(a)</Text>
+                    { spec ? (
+                      <Text fontSize='xs' color='orange.300'>{spec}</Text>
+                    ) : (
+                      <Text fontSize='xs' color='orange.300'>Visitante</Text>
+                    )}
                 </Flex>
                 <Icon as={RiMoreLine} ml='auto'/>
            </Flex>
@@ -122,7 +129,7 @@ export const Post = ({
                             }
                         </button>
                         <Text onClick={onOpen} cursor='pointer' >{likesCounter}</Text>
-                        <Modal  path={`posts/${postId}/likes`} isModalOpen={isOpen} onModalClose={onClose} />
+                        <LikesModal  path={`posts/${postId}/likes`} isModalOpen={isOpen} onModalClose={onClose} />
                     </Flex>
                     <Flex align='center'>
                         <Icon as={RiChat2Line} fontSize='20' mr='1' cursor='pointer' onClick={toggleCommentarySection} />

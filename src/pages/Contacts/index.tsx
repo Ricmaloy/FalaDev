@@ -1,10 +1,14 @@
-import { Grid, GridItem } from "@chakra-ui/react"
+import { Helmet } from 'react-helmet';
+import { Grid, GridItem, Text } from "@chakra-ui/react"
 import { Header } from "../../components/Header";
 import { SideBar } from "../../components/Sidebar";
 
 export function Contacts() {
     return (
         <>
+            <Helmet>
+                <title>Contacts | Fala Dev</title>
+            </Helmet>
             <Header />
             <Grid
               templateColumns="repeat(12, 1fr)"
@@ -23,7 +27,9 @@ export function Contacts() {
                     colStart={3} 
                     colEnd={10}
                 >
-                    Página de Contatos
+                    <Text>
+                        Epa, essa página ainda esta em desenvolvimento, volte outra hora! 😡
+                    </Text>
                 </GridItem>
                 <GridItem 
                     colStart={10} 

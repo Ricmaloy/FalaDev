@@ -1,5 +1,5 @@
 import { Box, Stack, Text, Icon, Link } from '@chakra-ui/react'
-import { Link as RouterLink } from 'react-router-dom'
+import { Link as RouterLink, NavLink } from 'react-router-dom'
 import { RiBarChart2Line, RiBookmarkLine, RiContactsLine, RiDashboardLine, RiNotification3Line, RiQuestionAnswerLine, RiQuestionLine, RiSettings4Line, RiLogoutBoxLine } from 'react-icons/ri'
 import { useAuth } from '../../hooks/useAuth'
 
@@ -23,10 +23,12 @@ export const SideBar = () => {
                         mt='8'
                         align='stretch'
                     >
-                        <Link display='flex' as={RouterLink} to='/'>
-                            <Icon as={RiDashboardLine} fontSize='20' />
-                            <Text ml='4' fontWeight='md'>Feed</Text> 
-                        </Link>
+                        <NavLink to='/'>
+                            <Link display='flex' as={RouterLink} to='/'>
+                                <Icon as={RiDashboardLine} fontSize='20' />
+                                <Text ml='4' fontWeight='md'>Feed</Text> 
+                            </Link>
+                        </NavLink>
                         <Link display='flex' as={RouterLink} to='/contacts'>
                             <Icon as={RiContactsLine} fontSize='20' />
                             <Text ml='4' fontWeight='md'>Contatos</Text> 

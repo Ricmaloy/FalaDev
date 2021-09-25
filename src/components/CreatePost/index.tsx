@@ -39,6 +39,7 @@ export const CreatePost = () => {
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             const firebasePost = await postRef.push({
                 name: user?.name,
+                spec: `${user?.occupation} na ${user?.company}`,
                 avatar: user?.avatar,
                 content: post,
                 publicationTime: Date()

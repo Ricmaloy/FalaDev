@@ -6,12 +6,14 @@ type likesProps = {
     name: string;
     avatar: string;
     authorId: string;
+    spec: string;
 }[];
 
 type firebaseLikesProps = Record<string, {
     name: string;
     avatar: string;
     authorId: string;
+    spec: string;
 }>
 
 export function useGetLikes( path: string ) {
@@ -29,6 +31,7 @@ export function useGetLikes( path: string ) {
                     authorId: value.authorId,
                     name: value.name,
                     avatar: value.avatar,
+                    spec: value.spec,
                     likeId: key
                 }
             });

@@ -1,4 +1,5 @@
 import { Flex, Button, Stack, Heading, Text } from '@chakra-ui/react'
+import { Helmet } from 'react-helmet';
 import { RiGoogleFill } from 'react-icons/ri'
 import { useHistory } from 'react-router'
 import { Input } from '../../components/Form/Input'
@@ -17,6 +18,10 @@ export function SignIn() {
     }
 
     return (
+        <>
+        <Helmet>
+            <title>Login | Fala Dev</title>
+        </Helmet>
         <Flex
           w='100vw'
           h='100vh'
@@ -65,5 +70,6 @@ export function SignIn() {
                 </Button>
             </Flex>
         </Flex>
+        </>
     )
 }

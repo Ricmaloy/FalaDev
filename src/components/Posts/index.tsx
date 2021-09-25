@@ -16,6 +16,7 @@ export const Posts = () => {
                   postId={post.postId}
                   avatar={post.author.avatar}
                   name={post.author.name}
+                  spec={post.author.spec}
                   content={post.content}
                   likesCounter={post.likeCount}
                   commentsCount={post.commentsCount}

@@ -1,10 +1,12 @@
 
-import { Flex, HStack, Icon, Box, Text, Avatar } from '@chakra-ui/react'
-import { RiNotificationLine, RiUserAddLine } from 'react-icons/ri'
+import { Flex, HStack, Icon, Box, Text, Avatar, useDisclosure } from '@chakra-ui/react'
+import { RiNotificationLine, RiBugLine } from 'react-icons/ri'
 import { useAuth } from '../../hooks/useAuth'
+import { BugReportModal } from '../BugReportModal';
 
 export const User = () => {
     const { user } = useAuth();
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
     return (
         <Flex
@@ -21,7 +23,8 @@ export const User = () => {
                 borderColor='gray.700'
             >
                 <Icon as={RiNotificationLine} fontSize='20'/>
-                <Icon  as={RiUserAddLine} fontSize='20'/>
+                <Icon as={RiBugLine} _hover={{color: 'orange.400'}} cursor='pointer' onClick={onOpen} fontSize='20'/>
+                <BugReportModal onModalClose={onClose} isModalOpen={isOpen} />
             </HStack>
         
             <Flex

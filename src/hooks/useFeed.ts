@@ -18,6 +18,7 @@ type PostProps = {
     author: {
         name: string;
         avatar: string;
+        spec: string;
     };
     content: string;
     publicationTime: string;
@@ -29,6 +30,7 @@ type PostProps = {
 
 type FirebasePosts = Record<number, {
     postId: string;
+    spec: string;
     name: string;
     avatar: string;
     content: string;
@@ -68,7 +70,7 @@ export function useFeed() {
                     postId: key,
                     content: value.content,
                     publicationTime: value.publicationTime,
-                    author: { name: value.name, avatar: value.avatar},
+                    author: { name: value.name, avatar: value.avatar, spec: value.spec},
                     likeCount: Object.values(value.likes ?? {}).length,
                     likeId: Object.entries(value.likes ?? {}).find(([key, like]) => like.authorId === user?.id)?.[0],
                     commentsCount: Object.values(value.comments ?? {}).length,
