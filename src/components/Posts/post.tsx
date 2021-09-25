@@ -99,7 +99,7 @@ export const Post = ({
                     >
                         <Text fontSize='sm'>{name}</Text>
                         <Box alignSelf='center' w='4px' h='4px' bg='gray.400' mx='2' borderRadius='full' ></Box>
-                        <Text as='span' fontSize='xs' color='gray.400' ><TimeAgo datetime={publicationTime} locale='pt_BR' /></Text> 
+                        <Text as='span' fontSize='xs' color='gray.400' ><TimeAgo datetime={new Date(publicationTime)} locale='pt_BR' /></Text> 
                     </Flex>
                     { spec ? (
                       <Text fontSize='xs' color='orange.300'>{spec}</Text>

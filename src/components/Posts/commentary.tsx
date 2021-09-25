@@ -71,7 +71,7 @@ export const Commentary = ({
                         <Flex flexDir='row' >
                             <Text as='span'>{name}</Text>
                             <Box alignSelf='center' w='4px' h='4px' bg='gray.400' mx='2' borderRadius='full' ></Box>
-                            <Text as='span' fontSize='xs' color='gray.400' > <TimeAgo datetime={commentaryPublicationTime} locale='pt_BR'  /></Text> 
+                            <Text as='span' fontSize='xs' color='gray.400' > <TimeAgo datetime={new Date(commentaryPublicationTime)} locale='pt_BR'  /></Text> 
                         </Flex>
                         <Text color='gray.300'>{commentary}</Text>
                     

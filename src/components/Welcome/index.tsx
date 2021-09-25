@@ -82,7 +82,7 @@ export const Welcome = ({ name }: WelcomeProps) => {
                             interagir com elas, seja por comentário ou por um like. 🧡
                         </Text>
                         <Text color='gray.200'>
-                            Todo esse projeto foi feito com muito carinho utilizando React, ChakraUI e Firebase e todo o código dele você encontra num repositório aberto no Github !
+                            Todo esse projeto foi feito com muito carinho utilizando React, ChakraUI, Firebase e todo o código dele você encontra num repositório aberto no Github !
                         </Text>
                     </Stack>
                     <ModalFooter>
@@ -97,14 +97,14 @@ export const Welcome = ({ name }: WelcomeProps) => {
                     <Divider mt='4' borderColor='gray.700'  />
                     <Stack mt='4'>
                         <Text color='gray.200'>Ao lado esquerdo da aplicação você vai encontrar um menu de navegação que vai levar você para outras páginas da aplicação, como por exemplo,
-                            uma página com todas as suas conexões, as notificações do seu perfil, um espaçõ para trocar mensagem e muito mais ! 
+                            uma página com todas as suas conexões, as notificações do seu perfil, um espaço para trocar mensagem e muito mais ! 
                         </Text>
                         <Text color='gray.200'>
-                            Ao centro da aplicação você verá o conteúdo principal da página, nessa principal temos todo um feed com posts de outras pessoas sobre diversos temas 
+                            Ao centro da aplicação você verá o conteúdo principal da página, nessa parte principal temos todo um feed com posts de outras pessoas sobre diversos temas 
                             ( não se esqueça de interagir hein ? )
                         </Text>
                         <Text color='gray.200'>
-                            Por fim, à direita teremos informações adícionais, como um quadro de notícias fresquinhas e indicações de novas amizades. Show né ?
+                            Por fim, à direita teremos informações adicionais, como um quadro de notícias fresquinhas e indicações de novas amizades. Show né ?
                         </Text>
                     </Stack>
                     <ModalFooter>
