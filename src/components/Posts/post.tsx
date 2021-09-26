@@ -1,7 +1,25 @@
 import { useState } from 'react'
-import { Flex, Text, Avatar, Icon, Divider, Box, Button, Input, useDisclosure } from '@chakra-ui/react'
-import { RiMoreLine, RiHeartLine, RiChat2Line, RiShareLine, RiHeartFill } from 'react-icons/ri'
+import { 
+    Flex, 
+    Text, 
+    Avatar, 
+    Icon, 
+    Divider, 
+    Box, 
+    Button, 
+    Input, 
+    useDisclosure, 
+    useBreakpointValue 
+} from '@chakra-ui/react'
+import { 
+    RiMoreLine, 
+    RiHeartLine, 
+    RiChat2Line, 
+    RiShareLine, 
+    RiHeartFill 
+} from 'react-icons/ri'
 import TimeAgo from 'timeago-react';
+
 import { useAuth } from '../../hooks/useAuth'
 import { database } from '../../services/firebase'
 import { Container } from '../Container'
@@ -80,11 +98,17 @@ export const Post = ({
         setIsCommentSectionHidden(!isCommentSectionHidden);
     }
 
+    const isWideSize = useBreakpointValue({
+        base: false,
+        md: true,
+        lg: true, 
+    })
+
     return (
         <Container>
            <Flex mb='6'>
                 <Avatar
-                  size='lg'
+                  size={ isWideSize ? 'lg' : 'md'}
                   name={name}
                   src={avatar}
                   border='1px solid #ed8936'
@@ -92,25 +116,26 @@ export const Post = ({
                 <Flex
                     flexDir='column'
                     justify='center'
-                    ml='3'
+                    ml={['2','3']}
                 >
                     <Flex
                         flexDir='row'
+                        align='center'
                     >
-                        <Text fontSize='sm'>{name}</Text>
+                        <Text fontSize={['xs','sm']}>{name}</Text>
                         <Box alignSelf='center' w='4px' h='4px' bg='gray.400' mx='2' borderRadius='full' ></Box>
-                        <Text as='span' fontSize='xs' color='gray.400' ><TimeAgo datetime={new Date(publicationTime)} locale='pt_BR' /></Text> 
+                        <Text as='span' fontSize={['xx-small','xs']} color='gray.400' ><TimeAgo datetime={new Date(publicationTime)} locale='pt_BR' /></Text> 
                     </Flex>
                     { spec ? (
-                      <Text fontSize='xs' color='orange.300'>{spec}</Text>
+                      <Text fontSize={['xx-small','xs']} color='orange.300'>{spec}</Text>
                     ) : (
-                      <Text fontSize='xs' color='orange.300'>Visitante</Text>
+                      <Text fontSize={['xx-small','xs']} color='orange.300'>Visitante</Text>
                     )}
                 </Flex>
                 <Icon as={RiMoreLine} ml='auto'/>
            </Flex>
            
-            <Box mx='5'  my='4'>
+            <Box mx={['0','5']}  my='4'>
                 <Text fontSize='sm'> {content} </Text>
             </Box>
 
@@ -122,9 +147,9 @@ export const Post = ({
                         <button onClick={() => handleLikePost(postId, likeId)}>
                             {
                                 likeId === undefined ? (
-                                    <Icon as={RiHeartLine} fontSize='20' mr='1'  cursor='pointer' />
+                                    <Icon as={RiHeartLine} fontSize={['18','20']} mr='1'  cursor='pointer' />
                                 ) : (
-                                    <Icon as={RiHeartFill} fontSize='20' mr='1'  cursor='pointer' color='orange' />
+                                    <Icon as={RiHeartFill} fontSize={['18','20']} mr='1'  cursor='pointer' color='orange' />
                                 )
                             }
                         </button>
@@ -132,12 +157,12 @@ export const Post = ({
                         <LikesModal  path={`posts/${postId}/likes`} isModalOpen={isOpen} onModalClose={onClose} />
                     </Flex>
                     <Flex align='center'>
-                        <Icon as={RiChat2Line} fontSize='20' mr='1' cursor='pointer' onClick={toggleCommentarySection} />
+                        <Icon as={RiChat2Line} fontSize={['18','20']} mr='1' cursor='pointer' onClick={toggleCommentarySection} />
                         <Text>{commentsCount}</Text>
                     </Flex>
                 </Flex>
 
-                <Icon as={RiShareLine} ml='auto' fontSize='20'/>
+                <Icon as={RiShareLine} ml='auto' fontSize={['18','20']}/>
             </Flex>
 
             {

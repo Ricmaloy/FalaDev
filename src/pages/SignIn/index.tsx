@@ -20,7 +20,7 @@ export function SignIn() {
     return (
         <>
         <Helmet>
-            <title>Login | Fala Dev</title>
+            <title >Login | Fala Dev</title>
         </Helmet>
         <Flex
           w='100vw'
@@ -31,14 +31,14 @@ export function SignIn() {
             <Flex
                 flexDir='column'
                 width='100%'
-                maxW='360px'
+                maxW={['300px','360px']}
                 bg='gray.800'
-                p='8'
+                p={['6','8']}
                 borderRadius='8'
             >
                 <Heading textAlign='center' as='h1' size='lg' mb='6' >Login</Heading>
 
-                <Stack spacing='4' >
+                <Stack spacing={['3','4']} >
                     <Input type='email' label='Email' name='email' />
                     <Input type='password' label='Senha' name='password' />
                 </Stack>
@@ -48,18 +48,18 @@ export function SignIn() {
                   colorScheme='orange'
                   transition='all'
                   transitionDuration='2'
-                  fontSize='md'
+                  fontSize={['sm','md']}
                   size='lg'
                 //   isLoading={true}
                 >
                     Entrar
                 </Button>
-                <Text fontSize='sm' textAlign='center' my='4' >ou</Text>
+                <Text fontSize='sm' textAlign='center' my={['2','4']} >ou</Text>
                 <Button
                   type='submit'
                   colorScheme='whiteAlpha'
                   transition='all'
-                  fontSize='md'
+                  fontSize={['sm','md']}
                   transitionDuration='2'
                   rightIcon={<RiGoogleFill/>}
                   size='lg'
