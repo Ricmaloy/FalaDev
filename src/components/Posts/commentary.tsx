@@ -1,4 +1,13 @@
-import { Flex, Text, Avatar, Icon, Stack, Box, useDisclosure } from '@chakra-ui/react'
+import { 
+    Flex, 
+    Text, 
+    Avatar, 
+    Icon, 
+    Stack, 
+    Box, 
+    useDisclosure, 
+    useBreakpointValue 
+} from '@chakra-ui/react'
 import { RiHeartFill, RiHeartLine, RiReplyLine } from 'react-icons/ri'
 import { useAuth } from '../../hooks/useAuth'
 import { database } from '../../services/firebase'
@@ -50,15 +59,21 @@ export const Commentary = ({
         } 
     }
 
+    const isWideSize = useBreakpointValue({
+        base: false,
+        md: true,
+        lg: true, 
+    })
+
     return (
         <Stack>
                 <Flex
-                    mx='5'
+                    mx={['1','5']}
                     mt='5'
                     fontSize='sm'
                 >
                     <Avatar
-                        size='md'
+                        size={ isWideSize ? 'md' : 'sm'}
                         name={name}
                         src={avatar}
                         border='1px solid #ed8936'
@@ -68,12 +83,12 @@ export const Commentary = ({
                         ml='3'
                         justify='center'
                     >
-                        <Flex flexDir='row' >
-                            <Text as='span'>{name}</Text>
+                        <Flex flexDir='row' align='center' >
+                            <Text as='span' fontSize={['xs','sm']} >{name}</Text>
                             <Box alignSelf='center' w='4px' h='4px' bg='gray.400' mx='2' borderRadius='full' ></Box>
-                            <Text as='span' fontSize='xs' color='gray.400' > <TimeAgo datetime={new Date(commentaryPublicationTime)} locale='pt_BR'  /></Text> 
+                            <Text as='span' fontSize={['xx-small','xs']} color='gray.400' > <TimeAgo datetime={new Date(commentaryPublicationTime)} locale='pt_BR'  /></Text> 
                         </Flex>
-                        <Text color='gray.300'>{commentary}</Text>
+                        <Text color='gray.300' fontSize={['xs','sm']} >{commentary}</Text>
                     
                         <Flex
                             mt='3'
@@ -91,14 +106,14 @@ export const Commentary = ({
                                         )
                                     }
                                 </button>
-                                <Text onClick={onOpen} cursor='pointer' >{commentaryLikeCount}</Text>
+                                <Text onClick={onOpen} cursor='pointer' fontSize={['xs','sm']} >{commentaryLikeCount}</Text>
                                 <LikesModal path={`posts/${postIdRef}/comments/${commentaryId}/likes/`} isModalOpen={isOpen} onModalClose={onClose} />
                             </Flex>
                             <Flex
                                 align='center'
                             >
                                 <Icon as={RiReplyLine} fontSize='20' mr='1' />
-                                <Text>comentar</Text>
+                                <Text fontSize={['xs', 'sm']} >comentar</Text>
                             </Flex>
                         </Flex>
 

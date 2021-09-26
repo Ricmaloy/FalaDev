@@ -9,7 +9,8 @@ import {
     Divider,
     Flex,
     Stack,
-    Avatar
+    Avatar,
+    useBreakpointValue
 } from "@chakra-ui/react"
 
 import { useGetLikes } from '../../hooks/useGetLikes';
@@ -23,16 +24,22 @@ interface modalProps {
 export const LikesModal = ({isModalOpen, onModalClose, path}: modalProps) => {
     const { likes } = useGetLikes(path);
 
+    const isWideSize = useBreakpointValue({
+        base: false,
+        md: true,
+        lg: true, 
+    })
+
     return (
-        <ChakraModal isOpen={isModalOpen} onClose={onModalClose} scrollBehavior={'inside'}>
+        <ChakraModal isOpen={isModalOpen} size={isWideSize ? 'md' : 'sm'} onClose={onModalClose} scrollBehavior={'inside'}>
             <ModalOverlay />
             <ModalContent bg='gray.800' >
             <ModalCloseButton />
             <ModalBody>
                 { likes.length === 0 ? (
-                    <Text my='3'>Ninguém curtiu isso, ainda !  😢</Text>
+                    <Text fontSize={['xs','sm','md']} my='3'>Ninguém curtiu isso, ainda !  😢</Text>
                 ) : (
-                    <Text my='3'>{likes.length} pessoa(s) curtiram isso ! 👍</Text>
+                    <Text fontSize={['xs','sm','md']} my='3'>{likes.length} pessoa(s) curtiram isso ! 👍</Text>
                 )}
                 <Divider borderColor='gray.600' />
                 <Stack my='3'>
@@ -42,18 +49,18 @@ export const LikesModal = ({isModalOpen, onModalClose, path}: modalProps) => {
                             return (
                                 <Flex key={like.likeId} >
                                     <Avatar
-                                        size='md'
+                                        size={isWideSize ? 'md' : 'sm'}
                                         name={like.name}
                                         src={like.avatar}
                                         border='1px solid #ed8936'
                                         mr='2'
                                     />
                                     <Flex flexDir='column' justify='center' >
-                                        <Text fontSize='sm'>{like.name}</Text>
+                                        <Text fontSize={['xs','sm']}>{like.name}</Text>
                                         {like.spec ? (
-                                            <Text fontSize='xs' color='orange.300'>{like.spec}</Text>
+                                            <Text fontSize={['xx-small','xs']} color='orange.300'>{like.spec}</Text>
                                         ) : (
-                                            <Text fontSize='xs' color='orange.300'>Visitante</Text>
+                                            <Text fontSize={['xx-small','xs']} color='orange.300'>Visitante</Text>
                                         )}
                                     </Flex>
                                 </Flex>

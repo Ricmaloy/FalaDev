@@ -1,6 +1,16 @@
-import { Flex, Avatar, Stack, Textarea, Button, Text, Icon, useToast } from '@chakra-ui/react'
-import { RiLockUnlockLine } from 'react-icons/ri'
 import { FormEvent, useState } from 'react'
+import { 
+    Flex, 
+    Avatar, 
+    Stack, 
+    Textarea, 
+    Button, 
+    Text, 
+    Icon, 
+    useToast,
+    useBreakpointValue 
+} from '@chakra-ui/react'
+import { RiLockUnlockLine } from 'react-icons/ri'
 import { useAuth } from '../../hooks/useAuth'
 import { database } from '../../services/firebase';
 import { Container } from '../Container'
@@ -10,6 +20,12 @@ export const CreatePost = () => {
     const [isButtonLoading, setIsButtonLoading] = useState(false);
     const { user } = useAuth();
     const toast = useToast();
+
+    const isWideSize = useBreakpointValue({
+        base: false,
+        md: true,
+        lg: true, 
+    })
 
     async function handleCreatePost(ev: FormEvent) {
         ev.preventDefault()
@@ -62,19 +78,24 @@ export const CreatePost = () => {
     return (
         <Container>
             <Flex>
-               <Avatar
-                  name={user?.name}
-                  src={user?.avatar}
-                  border='1px solid #ed8936'
-                  size='lg' 
-                />
+                {
+                    isWideSize && (
+                    <Avatar
+                        name={user?.name}
+                        src={user?.avatar}
+                        border='1px solid #ed8936'
+                        size={ isWideSize ? 'lg' : 'md'} 
+                    />
+                    )
+                }
+               
                 <Stack
                     flex='1'
-                    ml='5'
+                    ml={['0','0','5']}
                 >
                     <Textarea 
                         placeholder='O que está pensando ?' 
-                        fontSize='sm'
+                        fontSize={['xs','sm']}
                         maxH='150px'
                         focusBorderColor='orange.500'
                         borderColor='gray.700'
@@ -87,11 +108,11 @@ export const CreatePost = () => {
                     />
                     <Flex>
                         <Flex align='center' >
-                            <Icon as={RiLockUnlockLine} fontSize='20' />
-                            <Text fontSize='xs' ml='2' >Esse post será público</Text>
+                            <Icon as={RiLockUnlockLine} fontSize={['15','20']} />
+                            <Text fontSize={['xx-small','xs']} ml='2' >Esse post será público</Text>
                         </Flex>
-                        <Button colorScheme='orange' ml='auto' px='7' onClick={handleCreatePost} isLoading={isButtonLoading} >
-                            <Text fontSize='sm' >Postar</Text>
+                        <Button colorScheme='orange' ml='auto' px={['4','7']} onClick={handleCreatePost} isLoading={isButtonLoading} >
+                            <Text fontSize={['xs','sm']} >Postar</Text>
                         </Button>
                     </Flex>
                 </Stack>

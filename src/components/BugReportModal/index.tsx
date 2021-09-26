@@ -12,6 +12,7 @@ import {
     Text,
     Divider,
     Stack,
+    useBreakpointValue
 } from "@chakra-ui/react"
 
 interface BugReportModalProps {
@@ -24,6 +25,12 @@ export const BugReportModal = ({isModalOpen, onModalClose}: BugReportModalProps)
     const { user } = useAuth();
     const [modalSection, setModalSection] = useState(1);
     const [bugReport, setBugReport] = useState('');
+
+    const isWideSize = useBreakpointValue({
+        base: false,
+        md: true,
+        lg: true, 
+    })
 
     async function CompleteBugReport() {
         const bugsRef = database.ref(`bugs`);
@@ -43,26 +50,26 @@ export const BugReportModal = ({isModalOpen, onModalClose}: BugReportModalProps)
     }
 
     return(
-        <ChakraModal isOpen={isModalOpen} onClose={onModalClose} scrollBehavior={'inside'} closeOnOverlayClick={false} >
+        <ChakraModal isOpen={isModalOpen} size={isWideSize ? 'md' : 'sm'} onClose={onModalClose} scrollBehavior={'inside'} closeOnOverlayClick={false} >
             <ModalOverlay />
             
             {
                 modalSection === 1 && (
-                <ModalContent bg='gray.800' px='10' pt='5' >
+                <ModalContent bg='gray.800' px={['5','10']} pt='5' >
                     <ModalCloseButton />
-                    <Text textAlign='center' >Oh oh! Encontrou um bug ? 😨</Text>
+                    <Text textAlign='center' fontSize={['sm', 'md']} >Oh oh! Encontrou um bug ? 😨</Text>
                     <Divider mt='4' borderColor='gray.700'  />
                     <Stack mt='4'>
-                        <Text color='gray.200' fontSize='sm' >
+                        <Text color='gray.200' fontSize={['xs','sm']} >
                             Sentimos muito que isso tenha acontecido.
                         </Text>
-                        <Text color='gray.200' fontSize='sm' pb='3' >
+                        <Text color='gray.200' fontSize={['xs','sm']} pb='3' >
                             Para deixar a plataforma cada vez melhor e evitar que isso se repita com você 
                             ou com qualquer usuário, pedimos que descreva no campo abaixo o que aconteceu
                         </Text>
                         <Textarea 
                             placeholder='O que você encontrou ?' 
-                            fontSize='sm'
+                            fontSize={['xs','sm']}
                             maxH='150px'
                             focusBorderColor='orange.500'
                             borderColor='gray.700'
@@ -75,7 +82,16 @@ export const BugReportModal = ({isModalOpen, onModalClose}: BugReportModalProps)
                         />
                         </Stack>
                     <ModalFooter px='0'>
-                        <Button colorScheme='orange' px='8' isDisabled={bugReport.trim() === ''} fontSize='small' fontWeight='normal' onClick={() => setModalSection(modalSection + 1)}>Enviar</Button>
+                        <Button
+                            colorScheme='orange' 
+                            px={['5','8']} 
+                            isDisabled={bugReport.trim() === ''} 
+                            fontSize={['xs','small']} 
+                            fontWeight='normal' 
+                            onClick={() => setModalSection(modalSection + 1)}
+                        >
+                            Enviar
+                        </Button>
                     </ModalFooter>
                 </ModalContent>
                 )
@@ -84,16 +100,24 @@ export const BugReportModal = ({isModalOpen, onModalClose}: BugReportModalProps)
             {
                 modalSection === 2 && (
                     <ModalContent bg='gray.800' px='10' pt='5' >
-                        <Text textAlign='center' >Nossos agradecimentos 🥰</Text>
+                        <Text textAlign='center' fontSize={['sm', 'md']}  >Nossos agradecimentos 🥰</Text>
                         <Divider mt='4' borderColor='gray.700'  />
                         <Stack mt='4'>
-                            <Text color='gray.200' fontSize='sm' >
+                            <Text color='gray.200' fontSize={['xs','sm']} >
                                 Agradecemos imensamente sua ajuda, nosso time de desenvolvedores será notificado e 
                                 entrará em ação assim que possível para corrigir essa falha !
                             </Text>
                             </Stack>
                         <ModalFooter px='0'>
-                            <Button colorScheme='orange' px='8' fontSize='small' fontWeight='normal' onClick={CompleteBugReport}>Feshow</Button>
+                            <Button 
+                                colorScheme='orange' 
+                                px={['5','8']}
+                                fontSize={['xs','small']} 
+                                fontWeight='normal' 
+                                onClick={CompleteBugReport}
+                            >
+                                Feshow
+                            </Button>
                         </ModalFooter>
                     </ModalContent>
                 )
