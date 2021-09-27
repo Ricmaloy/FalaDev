@@ -15,7 +15,7 @@ export const Updates = () => {
             </Text>
 
             <Stack>
-                <Link as={RouterLink} to='/news1' >
+                <Link as={RouterLink} to='/news' >
                     <Text
                         fontWeight='semibold'
                         fontSize='md'
@@ -32,7 +32,7 @@ export const Updates = () => {
 
                 <Divider borderColor='gray.700' />
 
-                <Link as={RouterLink} to='/news2' > 
+                <Link as={RouterLink} to='/news' > 
                     <Text
                         fontWeight='semibold'
                         fontSize='md'
@@ -49,7 +49,7 @@ export const Updates = () => {
 
                 <Divider borderColor='gray.700' />
 
-                <Link as={RouterLink} to='/news3' > 
+                <Link as={RouterLink} to='/news' > 
                     <Text
                         fontWeight='semibold'
                         fontSize='md'
@@ -66,7 +66,7 @@ export const Updates = () => {
 
                 <Divider borderColor='gray.700' />
 
-                <Link as={RouterLink} to='/news4' > 
+                <Link as={RouterLink} to='/news' > 
                     <Text
                         fontWeight='semibold'
                         fontSize='md'

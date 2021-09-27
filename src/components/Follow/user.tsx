@@ -1,4 +1,4 @@
-import { Flex, Avatar, Text, Button } from '@chakra-ui/react'
+import { Flex, Avatar, Text, Button, useToast } from '@chakra-ui/react'
 
 interface UserProps {
     name: string,
@@ -7,6 +7,19 @@ interface UserProps {
 }
 
 export const User = ({name, user, src}: UserProps) => {
+    const toast = useToast();
+
+    async function handleFollowUser() {
+        toast({
+            title: "Feature em desenvolvimento",
+            description: "tente denovo mais tarde !",
+            status: "warning",
+            duration: 4000,
+            position: 'top',
+            isClosable: true,
+        });
+    }
+
     return (
         <Flex
             align='center'
@@ -26,6 +39,7 @@ export const User = ({name, user, src}: UserProps) => {
                 variant="ghost"
                 size='sm'
                 ml='auto'
+                onClick={handleFollowUser}
             >
                 Seguir
             </Button>

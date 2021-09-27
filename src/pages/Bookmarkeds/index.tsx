@@ -4,11 +4,11 @@ import { Header } from "../../components/Header";
 import { SideBar } from "../../components/Sidebar";
 import { WorkInProgress } from '../../components/WorkInProgress';
 
-export function Contacts() {
+export function Bookmarkeds() {
     return (
         <>
             <Helmet>
-                <title>Contacts | Fala Dev</title>
+                <title>Itens salvos | Fala Dev</title>
             </Helmet>
             <Header />
             <Grid
