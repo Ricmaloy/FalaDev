@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useHistory } from 'react-router'
-import { Text, Box, Icon, Flex } from '@chakra-ui/react'
+import { Text,  Icon, Flex } from '@chakra-ui/react'
 import { RiAlertLine } from 'react-icons/ri'
 import { Container } from '../Container'
 
